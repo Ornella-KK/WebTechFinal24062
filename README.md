@@ -85,3 +85,16 @@
         Database: MySql
         Security: Spring Security
         Build Tool: Maven 
+## Setup
+   Clone Repository: git clone https://github.com/Ornella-KK/ticketbookingapp.git
+   Navigate To Project Directory eg.cd Desktop/ticketbookingapp
+   Open the project in your preferred IDE.
+   Locate the application.properties or application.yml file.
+   Find the database configuration section and update it according to your database setup.
+   Use your IDE to run the Spring Boot application
+   Open your web browser and go to http://localhost:8080/ 
+
+
+
+## Author
+   KANKAZI KAYITABA Ornella
