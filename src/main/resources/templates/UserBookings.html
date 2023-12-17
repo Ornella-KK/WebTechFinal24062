@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-color: #EDEAE0;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 800px;
+            margin-top: 80px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4fa3e3;
+            color: white;
+        }
+
+        .no-flights-message {
+            text-align: center;
+            font-size: 18px;
+            color: #555;
+        }
+
+        .create-flight-button {
+            background-color: #4fa3e3;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+
+        .create-flight-button:hover {
+            background-color: #4fa3e3;
+        }
+    </style>
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="/css/navbar.css" />
+
+    <title>List Bookings</title>
+</head>
+<body style="background-color: #EDEAE0">
+<!-- NAVBAR -->
+<header class="site-navbar mt-3">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="site-logo col-6"><a href="/Auth/searchForm" style="color: #000000">TICKETBOOKING</a></div>
+            <nav class="mx-auto site-navigation">
+                <ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
+                    <li><a href="/Auth/searchForm" class="nav-link active">Home</a></li>
+                    <li><a href="/Auth/flightes">Flights</a></li>
+                    <li><a href="/Auth/Book/listBook">My Bookings</a></li>
+                    <li class="has-children">
+                        <a href="#">Manage Flights</a>
+                        <ul class="dropdown">
+                            <li><a href="job-single.html">Change Flight</a></li>
+                            <li><a href="post-job.html">Cancel Booking</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="right-cta-menu text-right d-flex align-items-center col-6">
+                <div class="ml-auto">
+                    <form id="logoutForm" action="/Auth/logout" method="post">
+                        <button type="submit" class="btn btn-primary border-width-2 d-none d-lg-inline-block" style="background-color:#4fa3e3;">
+                            <span class="mr-2 icon-lock_outline"></span>Log Out
+                        </button>
+                    </form>
+                </div>
+                <!--
+                                <a href="#" class="site-menu-toggle js-menu-toggle d-inline-block d-xl-none mt-lg-2 ml-3"><span class="icon-menu h3 m-0 p-0 mt-2"></span></a>
+                -->
+            </div>
+
+        </div>
+    </div>
+</header>
+<div class="container">
+    <h2>My Bookings</h2>
+    <!-- Check if there are bookings and passengers -->
+    <!--<div th:if="${not #lists.isEmpty(bookingDetails) and bookingDetails[0] != null}">-->
+    <table>
+        <thead>
+        <tr>
+            <th>Passenger Name</th>
+            <th>Passport Id</th>
+            <th>Contact Info</th>
+            <th>Booking ID</th>
+            <th>Booking Time</th>
+            <th>Flight Route</th>
+            <th>Departure Time</th>
+            <th>Date Of Flight</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="booking : ${bookingDetails}">
+            <td th:text="${booking[2].name}"></td>
+            <td th:text="${booking[2].passportId}"></td>
+            <td th:text="${booking[2].contactInfo}"></td>
+            <td th:text="${booking[0].bookingId}"></td>
+            <td th:text="${booking[0].bookingTime}"></td>
+            <td th:text="${booking[1].origin + ' to ' + booking[1].destination}"></td>
+            <td th:text="${booking[1].departureTime}"></td>
+            <td th:text="${booking[1].flightDate}"></td>
+
+            <!-- Add more cells as needed -->
+        </tr>
+        </tbody>
+    </table>
+   <!-- </div>-->
+    <!-- Display a message when there are no bookings or passengers -->
+    <!--<div th:if="${#lists.isEmpty(bookingDetails) or bookingDetails[0] == null}" class="no-data-message">
+      No bookings made.
+    </div>-->
+    <div th:if="${successMessage}" class="success-message">
+        <p th:text="${successMessage}"></p>
+    </div>
+
+</div>
+<script>
+    document.getElementById('logoutForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+        this.submit(); // Manually submit the form
+    });
+</script>
+</body>
+</html>
